@@ -11,27 +11,19 @@ describe('Server Test', () => {
       username: 'saif',
       password: '12345',
     };
-    mockRequest
-      .post('/signup')
-      .send(userObj)
-      .then((data) => {
-        let pass = data.body.data.hashedPass;
-        expect(data.statusCode).toBe(201);
-        expect(byc.compareSync(userObj.password, pass)).toBeTruthy();
-      });
+    const result = await mockRequest.post('/signup').send(userObj);
+    expect(result.statusCode).toBe(201);
+    let pass = result.body.data.hashedPass;
+    expect(await byc.compareSync(userObj.password, pass)).toBeTruthy();
   });
 
-  it('should response to 500 if the user who try to signin not in the DB', () => {
+  it('should response to 500 if the user who try to signin not in the DB', async () => {
     const userObj = {
       username: 'saif',
       password: '12345',
     };
-    mockRequest
-      .post('/signin')
-      .auth(userObj)
-      .then((result) => {
-        expect(result.statusCode).toBe(500);
-        expect(result.text).toEqual('Invalid User Name or password');
-      });
+    const result = await mockRequest.post('/signin').auth(userObj);
+    expect(result.statusCode).toBe(500);
+    expect(result.text).toEqual('Invalid User Name or password');
   });
 });
