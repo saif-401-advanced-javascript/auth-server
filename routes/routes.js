@@ -1,15 +1,20 @@
 'use strict';
+const { raw } = require('body-parser');
 const express = require('express');
-const { getAllUsers } = require('../lib/models/users/user.model');
 const userModel = require('../lib/models/users/user.model');
 const basicAuthMiddleware = require('../middleware/basicAuth.middleware');
+const oauth = require('../middleware/oauth');
 
 const router = express.Router();
 
 // Routes
+router.get('/', (req, res) => {
+  res.render('../index.html');
+});
 router.post('/signup', createNewUser);
 router.post('/signin', basicAuthMiddleware, signInUser);
 router.get('/users', getAllUsersInDb);
+router.get('/oauth', oauth, oauthUser);
 
 // Functions
 async function createNewUser(req, res, next) {
@@ -52,5 +57,13 @@ async function getAllUsersInDb(req, res, next) {
   } catch (error) {
     next(error);
   }
+}
+
+async function oauthUser(req, res, next) {
+  res.status(201);
+  console.log(req.user);
+  res.json({
+    result: req.user.username,
+  });
 }
 module.exports = router;
