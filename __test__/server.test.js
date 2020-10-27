@@ -41,13 +41,17 @@ describe('Server Test', () => {
         Authorization: `token ${token}`,
       })
       .then((result) => {
+        console.log('___RESULT', result.cookies);
+        console.log('RESUTL______', result.body);
+        let user = result.body.user;
         expect(result.statusCode).toBe(200);
-        expect(result.body.user).not.toBeUndefined();
+        expect(user).not.toBeUndefined();
+        expect(user.exp - user.iat).toEqual(15000);
         done();
       });
   });
 
-  it('should return the user if the token was send correctly', (done) => {
+  it('should response to 500 if the token was incorrect', (done) => {
     mockRequest
       .get('/secret')
       .set({

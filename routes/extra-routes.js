@@ -9,6 +9,7 @@ router.get('/secret', bearerAuth, (req, res) => {
   res.status(200);
   res.json({
     user: req.user,
+    cookies: req.cookies,
   });
 });
 

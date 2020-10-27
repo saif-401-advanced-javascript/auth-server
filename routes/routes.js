@@ -47,7 +47,6 @@ async function signInUser(req, res, next) {
 async function getAllUsersInDb(req, res, next) {
   try {
     const allUsers = await userModel.getAllUsers();
-    console.log(allUsers);
     res.status(200);
     res.json({
       count: allUsers.length,
