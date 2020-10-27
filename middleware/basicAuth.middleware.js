@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     next('Invalid Login');
   } else {
     const basicAuth = req.headers.authorization.split(' ').pop();
-    const [username, password] = base64.decode(basicAuth).split(':');
+    const [username, password] = await base64.decode(basicAuth).split(':');
     const record = await userModel.authenticate(username, password);
     if (typeof record != 'string') {
       const token = await userModel.generateToken(username);

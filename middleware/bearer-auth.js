@@ -3,6 +3,7 @@
 const userModel = require('../lib/models/users/user.model');
 
 module.exports = async (req, res, next) => {
+  console.log(req.headers.authorization);
   if (!req.headers.authorization) {
     next('Invalid User');
   } else {
