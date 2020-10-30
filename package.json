@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --coverage --verbose --detectOpenHandles",
     "start": "node index.js",
-    "lint": "eslint index.js lib/ __test__/ middleware/ public/ routes/ "
+    "lint": "eslint index.js lib/ __test__/ middleware/  routes/ "
   },
   "repository": {
     "type": "git",
