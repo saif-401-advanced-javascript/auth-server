@@ -7,9 +7,6 @@ const oauth = require('../middleware/oauth');
 const router = express.Router();
 
 // Routes
-router.get('/', (req, res) => {
-  res.render('../index.html');
-});
 router.post('/signup', createNewUser);
 router.post('/signin', basicAuthMiddleware, signInUser);
 router.get('/users', getAllUsersInDb);
