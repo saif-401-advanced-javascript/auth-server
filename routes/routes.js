@@ -1,5 +1,4 @@
 'use strict';
-const { raw } = require('body-parser');
 const express = require('express');
 const userModel = require('../lib/models/users/user.model');
 const basicAuthMiddleware = require('../middleware/basicAuth.middleware');
@@ -8,9 +7,6 @@ const oauth = require('../middleware/oauth');
 const router = express.Router();
 
 // Routes
-router.get('/', (req, res) => {
-  res.render('../index.html');
-});
 router.post('/signup', createNewUser);
 router.post('/signin', basicAuthMiddleware, signInUser);
 router.get('/users', getAllUsersInDb);
@@ -48,7 +44,6 @@ async function signInUser(req, res, next) {
 async function getAllUsersInDb(req, res, next) {
   try {
     const allUsers = await userModel.getAllUsers();
-    console.log(allUsers);
     res.status(200);
     res.json({
       count: allUsers.length,
@@ -61,9 +56,9 @@ async function getAllUsersInDb(req, res, next) {
 
 async function oauthUser(req, res, next) {
   res.status(201);
-  console.log(req.user);
   res.json({
     result: req.user.username,
+    token: req.token,
   });
 }
 module.exports = router;
