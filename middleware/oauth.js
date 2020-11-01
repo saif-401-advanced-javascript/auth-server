@@ -49,7 +49,7 @@ module.exports = async (req, res, next) => {
       password: 'oauthpassword', // this can be anything
     };
     const user = await userModel.create(record);
-    const token = await userModel.generateToken(user.username);
+    const token = await userModel.generateToken(user);
 
     return [user, token];
   }

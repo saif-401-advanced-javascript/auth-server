@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
     userModel
       .authenticateToken(token)
       .then(async (validUser) => {
-        let newToken = await userModel.generateToken(validUser.username);
+        let newToken = await userModel.generateToken(validUser);
         req.cookies = newToken;
         req.user = validUser;
         next();

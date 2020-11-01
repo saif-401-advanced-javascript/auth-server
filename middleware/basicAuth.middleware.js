@@ -10,8 +10,8 @@ module.exports = async (req, res, next) => {
     const [username, password] = await base64.decode(basicAuth).split(':');
     const record = await userModel.authenticate(username, password);
     if (typeof record != 'string') {
-      const token = await userModel.generateToken(username);
       const userDb = await userModel.findUser(username);
+      const token = await userModel.generateToken(userDb[0]);
       req.user = userDb[0];
       req.token = token;
       next();
